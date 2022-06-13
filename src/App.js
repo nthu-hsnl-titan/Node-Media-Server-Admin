@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 import Dashboard from "./Dashboard";
 import Profile from "./Profile";
 import Streams from "./Streams";
+import Answer from "./Answer";
 
 import "./App.css"
 
@@ -13,7 +14,7 @@ const { Header, Sider, Content, Footer } = Layout;
 
 class App extends Component {
 
-    fullTitle = "NodeMediaServer";
+    fullTitle = "Invigilation";
 
     shortTitle = "NMS";
 
@@ -67,6 +68,12 @@ class App extends Component {
                                     <span>Profile</span>
                                 </Link>
                             </Menu.Item>
+                            <Menu.Item key="/admin/answer">
+                                <Link to="/admin/answer">
+                                    <Icon type="profile" />
+                                    <span>Answer</span>
+                                </Link>
+                            </Menu.Item>
                         </Menu>
                     </Sider>
                     <Layout>
@@ -83,6 +90,7 @@ class App extends Component {
                             <Route exact path="/admin" component={Dashboard} />
                             <Route path="/admin/streams" component={Streams} />
                             <Route path="/admin/profile" component={Profile} />
+                            <Route path="/admin/answer" component={Answer} />
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>
                             Node-Media-Server ©2019 Created by <a href="http://nodemedia.cn" rel="noopener noreferrer" target="_blank">NodeMedia</a>.
