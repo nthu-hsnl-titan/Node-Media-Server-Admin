@@ -12,12 +12,13 @@ class Answer extends Component {
     qid: 0, // question ID
     qarr: [], // question image array
     sta: null, // null: display current time, 'W': display time wait for exam, 'E': examing, display duration.
+    blurTimes: 2,
     duration: null,
     examDate: null,
     waitTime: null,
     min2ms: 60000, // minutes to ms
     s2ms: 1000, // second to ms
-    host: 'http://localhost:5000',
+    host: 'http://3.38.144.35:5000',
     LoginVisible: false,
     WarnVisible: false,
     WarnModalVisible: false,
@@ -34,10 +35,30 @@ class Answer extends Component {
     ),
   };
 
+  // onFocus = () => {
+  //   console.log("Tab is in focus");
+  // };
+  onBlur = () => {
+    if (this.state.sta === "E") {
+      this.state.blurTimes--;
+  
+      if (this.state.blurTimes < 0) {
+        this.state.sta = 'Q';
+        alert("Exam qualification is canceled!");
+      }
+      else {
+        alert("Warning: What are you doing?");
+      }
+    }
+  };
+
   componentDidMount() {
+    // window.addEventListener("focus", this.onFocus);
+    window.addEventListener("blur", this.onBlur);
+
     var self = this;
     document.getElementById('addbut').onclick = () => {
-      var students = ['106062163']; //, '110062558', '110062559']
+      var students = ['110065511', '110062558', '106062242']; //, '110062558', '110062559']
       students.forEach((val, idx) => {
         axios
           .post(self.state.host + '/addData', {
@@ -242,6 +263,9 @@ class Answer extends Component {
           $('#sid').html(self.state.sid); // change sid text to sid
           self.setState({ WarnVisible: false });
           self.hideLoginVisible();
+
+          self.props.sendSID(self.state.sid);
+
         } else {
           console.log('No next exam!');
           self.setState({ WarnVisible: true });
